@@ -1,28 +1,22 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import CodeDashboard from './pages/CodeDashboard'
 import Auth from './pages/Auth'
-import Dashboard from './pages/Dashboard'
+import ProfileDashboard from './pages/ProfileDashboard'
+import CodeDashboard from './pages/CodeDashboard'
+import EditProfile from './pages/EditProfile'
 import Profile from './pages/Profile'
 import './App.css'
-
-function Home() {
-  return (
-    <div className="App">
-      <h1>Welcome</h1>
-      <p>
-        Go to the <Link to="/login">Login</Link> page, update your <Link to="/profile">Profile</Link>, or view the <Link to="/dashboard">Dashboard</Link>.
-      </p>
-    </div>
-  )
-}
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ProfileDashboard />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/codeDashboard" element={<CodeDashboard />} />
+        <Route path="/profileDashboard" element={<ProfileDashboard />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>
     </Router>
   )

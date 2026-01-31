@@ -9,7 +9,7 @@ import PlatformBreakdown from '../components/PlatformBreakdown';
 import ActivityCalendar from '../components/ActivityCalendar';
 import '../styles/dashboard.css';
 
-function Dashboard() {
+function CodeDashboard() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -220,4 +220,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default CodeDashboard;
