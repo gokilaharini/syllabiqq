@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
 
-export default function Dashboard() {
+export default function ProfileDashboard() {
   const navigate = useNavigate();
   return (
     <div className="dashboard">

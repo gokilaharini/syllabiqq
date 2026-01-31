@@ -13,7 +13,7 @@ export default function Login({ switchToSignup }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+    navigate("/codeDashboard");
   };
 
   return (
