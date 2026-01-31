@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
@@ -7,7 +7,7 @@
   padding: 20px;
 }
 
-.login-card {
+.signup-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -20,7 +20,7 @@
   min-height: 600px;
 }
 
-.login-image {
+.signup-image {
   background: linear-gradient(45deg, #667eea, #764ba2);
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   position: relative;
 }
 
-.login-image::before {
+.signup-image::before {
   content: '';
   position: absolute;
   top: 0;
@@ -45,14 +45,14 @@
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.login-form {
+.signup-form {
   padding: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.login-form h2 {
+.signup-form h2 {
   font-size: 2rem;
   font-weight: 700;
   color: #2d3748;
@@ -67,10 +67,13 @@
   font-size: 1rem;
 }
 
-.login-form input {
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.signup-form input {
   width: 100%;
   padding: 1rem;
-  margin-bottom: 1.5rem;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   font-size: 1rem;
@@ -79,27 +82,14 @@
   color: #2d3748;
 }
 
-.login-form input:focus {
+.signup-form input:focus {
   outline: none;
   border-color: #667eea;
   background: white;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.captcha-box {
-  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-  padding: 1rem;
-  text-align: center;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 3px;
-  font-size: 1.2rem;
-  color: #475569;
-  border: 2px solid #e2e8f0;
-}
-
-.login-form button {
+.signup-form button {
   width: 100%;
   padding: 1rem;
   background: linear-gradient(135deg, #667eea, #764ba2);
@@ -113,7 +103,7 @@
   margin-top: 1rem;
 }
 
-.login-form button:hover {
+.signup-form button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
@@ -137,16 +127,16 @@
 }
 
 @media (max-width: 768px) {
-  .login-card {
+  .signup-card {
     grid-template-columns: 1fr;
     max-width: 400px;
   }
   
-  .login-image {
+  .signup-image {
     min-height: 200px;
   }
   
-  .login-form {
+  .signup-form {
     padding: 2rem;
   }
 }
