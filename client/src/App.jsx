@@ -4,6 +4,7 @@ import CodeDashboard from './pages/CodeDashboard'
 import ProfileDashboard from './pages/ProfileDashboard'
 import EditProfile from './pages/EditProfile'
 import Profile from './pages/Profile'
+import NotesDashboard from './pages/NotesDashBoard'
 import './App.css'
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/profiledashboard" element={<ProfileDashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/notes" element={<NotesDashboard />} />
       </Routes>
     </Router>
   )

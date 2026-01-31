@@ -33,9 +33,8 @@ const PdfSchema = new mongoose.Schema({
 });
 
 // Update the updatedAt field before saving
-PdfSchema.pre('save', function(next) {
+PdfSchema.pre('save', function() {
   this.updatedAt = Date.now();
-  next();
 });
 
 module.exports = mongoose.model('Pdf', PdfSchema);
