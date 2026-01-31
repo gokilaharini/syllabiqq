@@ -31,6 +31,30 @@
   margin-bottom: 25px;
 }
 
+.auth-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.auth-toggle button {
+  flex: 1;
+  padding: 10px 12px;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.auth-toggle button.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
 .input-group {
   margin-bottom: 18px;
 }
@@ -69,4 +93,11 @@ button {
 
 button:hover {
   background: #f59e0b;
+}
+
+.auth-error {
+  margin: 8px 0 16px;
+  text-align: center;
+  color: #dc2626;
+  font-size: 14px;
 }
