@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getStoredUser } from '../utils/auth';
 import Navbar from '../components/Navbar';
 import '../styles/notesDashboard.css';
+import { toast } from 'react-toastify';
 
 function NotesDashboard() {
   const [user, setUser] = useState(null);
@@ -149,10 +150,12 @@ const handleChatSubmit = async (e) => {
     if (file) {
       if (file.type !== 'application/pdf') {
         setUploadError('Only PDF files are allowed');
+        toast.error('Only PDF files are allowed');
         return;
       }
       if (file.size > 10 * 1024 * 1024) {
         setUploadError('File size must be less than 10MB');
+        toast.error('File size must be less than 10MB');
         return;
       }
       setUploadFile(file);
@@ -165,11 +168,13 @@ const handleChatSubmit = async (e) => {
     
     if (!uploadFile) {
       setUploadError('Please select a PDF file');
+      toast.error('Please select a PDF file');
       return;
     }
     
     if (!uploadName.trim()) {
       setUploadError('Please provide a name for the notes');
+      toast.error('Please provide a name for the notes');
       return;
     }
 
@@ -177,80 +182,39 @@ const handleChatSubmit = async (e) => {
       setUploading(true);
       setUploadError('');
       setUploadSuccess('');
-
-      // const formData = new FormData();
-      // formData.append('pdf', uploadFile);
-      // formData.append('name', uploadName.trim());
-      // if (user?.id) {
-      //   formData.append('userId', user.id);
-      // }
-
-      // await axios.post('http://localhost:5000/api/pdfs', formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data'
-      //   }
-      // });
-
-      // setUploadSuccess('Notes uploaded successfully!');
-      // setUploadFile(null);
-      // setUploadName('');
-      // fetchNotes(); // Refresh the notes list
       const buildNotesFormData = () => {
-  const fd = new FormData();
-  fd.append('pdf', uploadFile);          // for notes API
-  fd.append('name', uploadName.trim());
-  if (user?.id) fd.append('userId', user.id);
-  return fd;
-};
+        const fd = new FormData();
+        fd.append('pdf', uploadFile);
+        fd.append('name', uploadName.trim());
+        if (user?.id) fd.append('userId', user.id);
+        return fd;
+      };
 
-const buildIngestFormData = () => {
-  const fd = new FormData();
-  fd.append('file', uploadFile);         // 👈 IMPORTANT
-  return fd;
-};
+      const buildIngestFormData = () => {
+        const fd = new FormData();
+        fd.append('file', uploadFile);
+        return fd;
+      };
 
-try {
-  setUploading(true);
-  setUploadError('');
-  setUploadSuccess('');
+      // 1) Upload to notes backend
+      await axios.post(
+        'http://localhost:5000/api/pdfs',
+        buildNotesFormData(),
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
 
-  // 1️⃣ Upload to notes backend
-  await axios.post(
-    'http://localhost:5000/api/pdfs',
-    buildNotesFormData(),
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
+      // 2) Upload to RAG ingest backend
+      await axios.post(
+        'https://rag-test-kabb.onrender.com/ingest/pdf',
+        buildIngestFormData(),
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
 
-  // 2️⃣ Upload to ingest (FastAPI RAG backend)
-  await axios.post(
-    'https://rag-test-kabb.onrender.com/ingest/pdf',
-    buildIngestFormData(),
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  );
-
-  setUploadSuccess('Notes uploaded and indexed successfully!');
-  setUploadFile(null);
-  setUploadName('');
-  fetchNotes();
-
-  setTimeout(() => {
-    setShowUploadModal(false);
-    setUploadSuccess('');
-  }, 1500);
-
-} catch (error) {
-  console.error('Upload error:', error);
-
-  if (error.response?.status === 422) {
-    setUploadError('Invalid file format for ingest API');
-  } else {
-    setUploadError('Upload failed. Please try again.');
-  }
-} finally {
-  setUploading(false);
-}
-
-
+      setUploadSuccess('Notes uploaded and indexed successfully!');
+      toast.success('PDF uploaded and indexed successfully');
+      setUploadFile(null);
+      setUploadName('');
+      fetchNotes();
 
       setTimeout(() => {
         setShowUploadModal(false);
@@ -258,7 +222,14 @@ try {
       }, 1500);
     } catch (error) {
       console.error('Upload error:', error);
-      setUploadError(error.response?.data?.message || 'Failed to upload notes');
+      if (error?.response?.status === 422) {
+        setUploadError('Invalid file format for ingest API');
+        toast.error('Invalid file format for ingest API');
+      } else {
+        const msg = error?.response?.data?.message || 'Upload failed. Please try again.';
+        setUploadError(msg);
+        toast.error(msg);
+      }
     } finally {
       setUploading(false);
     }
